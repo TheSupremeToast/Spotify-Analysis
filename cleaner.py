@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pandas as pd
 import time
@@ -65,7 +66,7 @@ def get_tracks(his):
 # get list of most played artists (sorted descending) 
 # his: dataframe to pull from
 def get_artists(his):
-    artists = unskipped['artistName'].value_counts() 
+    artists = his['artistName'].value_counts() 
     return(artists)
 
 # for relative frequency add 'normalize = True' within value_counts()
