@@ -70,10 +70,10 @@ def get_artists(his):
 
 # for relative frequency add 'normalize = True' within value_counts()
 
-##################
-
 # outdated - use get functions with skipped df
 # skipped_tracks = skipped['trackName'].value_counts()
 # skipped_artists = skipped['artistName'].value_counts()
 
+##################
 
+# ENDFILE
