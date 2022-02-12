@@ -27,7 +27,7 @@ def read_history(directory):
     print('Files Included:', i, '\n')
     print('Unique Values:')
     print(his.apply(lambda x: x.nunique()))
-    helper.his = his
+    helper.global_his = his
     return his
 
 ##################
@@ -44,6 +44,7 @@ def sort_unskipped(his):
     # This line causes minor error, fix at some point - currently necessary for timeframe functions to work
     unskipped['endTime'] = pd.to_datetime(unskipped['endTime'])
     
+    helper.unskipped = unskipped
     return(unskipped)
 
 #
@@ -55,6 +56,8 @@ def sort_unskipped(his):
 def sort_skipped(his):
     # sort songs into skipped and unskipped categories
     skipped = his[his['msPlayed'] < 30000]
+
+    helper.skipped = skipped
     return(skipped)
 
 ##################

@@ -7,16 +7,15 @@ from cleaner import *
 ### helper.py ###
 #################
 
-# setup global variables
-# TODO - get his and unskipped
-
 #################
 
 #
-# Set up global variables
+# Instantiate global variables
+# (Defined by functions in cleaner.py)
 #
-his = 0 
-
+global_his = None
+unskipped = None
+skipped = None
 
 #################
 
@@ -41,10 +40,10 @@ def plotArtist(artistname, numtracks):
 # TODO - change to output in the form of 'songPlayCount' function 
 def topSongPlays(numsongs):
     int(numsongs)
+    tracks = unskipped['trackName'].value_counts()
     print('Your top', numsongs, 'songs: ')
     print('Song                       Plays')
-    print(tracks.head(numsongs))
-    return(tracks)
+    return(tracks.head(numsongs))
 
 #################
 
@@ -61,14 +60,13 @@ def playtime(his):
 
 #################
 
-# TODO
-
 #
 # Get total play count for a given artist
 #
 def artistPlayCount(artistname):
     plays = unskipped[unskipped['artistName'] == artistname]
     plays = plays.apply(lambda x: x.nunique())
+    print("You have listened to", artistname, plays, "times.")
     return plays[0]
     
 #
@@ -77,6 +75,7 @@ def artistPlayCount(artistname):
 def songPlayCount(trackname):
     plays = unskipped[unskipped['trackName'] == trackname]
     plays = plays.apply(lambda x: x.nunique())
+    print("You have listened to", trackname, plays, "times.")
     return plays[0]
 
 #################
@@ -177,3 +176,31 @@ def listeningTimeMonth(month_num, year):
 def listeningTimeArtist(artist):
     df_params = unskipped[unskipped['artistName'] == artist]
     return(df_params['msPlayed'].sum() / 1000 / 60 / 60)
+
+
+################
+
+#
+# histogram of average time listened to songs
+# (skipped songs are dropped)
+#
+def avgTrackLength():
+    plt.rcParams['figure.figsize'] = [10, 8]
+    plt.hist(unskipped['msPlayed'], 
+             bins = [0, 50000, 100000, 150000, 200000, 250000, 
+                 300000, 350000, 400000, 450000, 500000, 550000])
+    plt.xlabel("Song Playtime (ms)")
+    plt.ylabel("Number of plays")
+    plt.title("Average Song Length")
+    plt.show()
+
+################
+
+# IDEAS:
+# graph of playtime per month (general, artists, songs?)
+# api calls for current top songs/artists/genres
+# genre graphs - requires api calls and track ids
+
+################
+
+# ENDFILE
