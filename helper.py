@@ -200,6 +200,7 @@ def avgTrackLength():
 # graph of playtime per month (general, artists, songs?)
 # api calls for current top songs/artists/genres
 # genre graphs - requires api calls and track ids
+# make cleaner and helper into classes to store multiple sets of data at a time
 
 ################
 
