@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import time
 import datetime
+import helper
 
 ##################
 ### cleaner.py ###
@@ -26,6 +27,7 @@ def read_history(directory):
     print('Files Included:', i, '\n')
     print('Unique Values:')
     print(his.apply(lambda x: x.nunique()))
+    helper.his = his
     return his
 
 ##################

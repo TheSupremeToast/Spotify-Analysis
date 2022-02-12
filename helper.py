@@ -13,10 +13,18 @@ from cleaner import *
 #################
 
 #
+# Set up global variables
+#
+his = 0 
+
+
+#################
+
+#
 # plots top (numtracks) songs by a given artist
 #
-plt.rcParams['figure.figsize'] = [20, 8]
 def plotArtist(artistname, numtracks):
+    plt.rcParams['figure.figsize'] = [20, 8]
     artistdata = unskipped[unskipped['artistName'] == artistname]
     artistdata = artistdata['trackName'].value_counts()
     plt.plot(artistdata.head(numtracks), 'o')
