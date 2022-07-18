@@ -60,6 +60,8 @@ def playtime(his):
 
 #################
 
+# TODO: fix minor issue with displaying the play variable as list instead of int
+
 #
 # Get total play count for a given artist
 #
@@ -83,66 +85,70 @@ def songPlayCount(trackname):
 #
 # Get top songs since a date
 #
-def topSongsTimeframe(timestamp):
+def topSongsTimeframe(timestamp, graph = False):
     plt.rcParams['figure.figsize'] = [20, 8]
     # convert input into timestamp format
     element = datetime.datetime.strptime(timestamp, "%Y-%m-%d")
     times = unskipped[unskipped['endTime'] >= element]
     temp = times['trackName'].value_counts() 
-    plt.plot(temp.head(100), 'o')
-    plt.xticks(rotation = 90)
-    plt.title('Top Tracks Since ' + timestamp)
-    plt.ylabel('Plays')
-    plt.show()
+    if graph:
+        plt.plot(temp.head(100), 'o')
+        plt.xticks(rotation = 90)
+        plt.title('Top Tracks Since ' + timestamp)
+        plt.ylabel('Plays')
+        plt.show()
     return(temp.head(10))
     
 #
 # Get top songs between two dates
 #
-def topSongsTimeframeBounded(lower, upper):
+def topSongsTimeframeBounded(lower, upper, graph = False):
     plt.rcParams['figure.figsize'] = [20, 8]
     element_l = datetime.datetime.strptime(lower, "%Y-%m-%d")
     element_u = datetime.datetime.strptime(upper, "%Y-%m-%d")
     times = unskipped[unskipped['endTime'] >= element_l] 
     times = times[times['endTime'] <= element_u]
     temp = times['trackName'].value_counts() 
-    plt.plot(temp.head(100), 'o')
-    plt.xticks(rotation = 90)
-    plt.title('Top tracks between ' + lower + ' and ' + upper)
-    plt.ylabel('Plays')
-    plt.show()
+    if graph:
+        plt.plot(temp.head(100), 'o')
+        plt.xticks(rotation = 90)
+        plt.title('Top tracks between ' + lower + ' and ' + upper)
+        plt.ylabel('Plays')
+        plt.show()
     return (temp.head(25))
 
 #
 # Get top artists since a data
 #
-def topArtistsTimeframe(timestamp):
+def topArtistsTimeframe(timestamp, graph = False):
     plt.rcParams['figure.figsize'] = [20, 8]
     element = datetime.datetime.strptime(timestamp, "%Y-%m-%d")
     times = unskipped[unskipped['endTime'] >= element]
     temp = times['artistName'].value_counts()
-    plt.plot(temp.head(100), 'o')
-    plt.xticks(rotation = 90)
-    plt.title('Top Artists Since ' + timestamp)
-    plt.ylabel('Plays')
-    plt.show()
+    if graph:
+        plt.plot(temp.head(100), 'o')
+        plt.xticks(rotation = 90)
+        plt.title('Top Artists Since ' + timestamp)
+        plt.ylabel('Plays')
+        plt.show()
     return(temp.head(10))
 
 #
 # Get top artists between two dates
 #
-def topArtistsTimeframeBounded(lower, upper):
+def topArtistsTimeframeBounded(lower, upper, graph = False):
     plt.rcParams['figure.figsize'] = [20, 8]
     element_l = datetime.datetime.strptime(lower, "%Y-%m-%d")
     element_u = datetime.datetime.strptime(upper, "%Y-%m-%d")
     times = unskipped[unskipped['endTime'] >= element_l]
     times = times[times['endTime'] <= element_u]
     temp = times['artistName'].value_counts()
-    plt.plot(temp.head(100), 'o')
-    plt.xticks(rotation = 90)
-    plt.title('Top Artists Between ' + lower + ' and ' + upper)
-    plt.ylabel('Plays')
-    plt.show()
+    if graph:
+        plt.plot(temp.head(100), 'o')
+        plt.xticks(rotation = 90)
+        plt.title('Top Artists Between ' + lower + ' and ' + upper)
+        plt.ylabel('Plays')
+        plt.show()
     return(temp.head(10))
 
 #################
@@ -197,10 +203,13 @@ def avgTrackLength():
 ################
 
 # IDEAS:
+# daily song/artist charts and numbers
+# desktop app allowing changing of graphs and lists
 # graph of playtime per month (general, artists, songs?)
 # api calls for current top songs/artists/genres
-# genre graphs - requires api calls and track ids
+# genre graphs - requires api calls and track ids (computationally heavy)
 # make cleaner and helper into classes to store multiple sets of data at a time
+# all time data (multiple datasets) vs current year (jan-dec) data
 
 ################
 
