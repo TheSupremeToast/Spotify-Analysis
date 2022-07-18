@@ -1,0 +1,7 @@
+input/..
+.ipynb_checkpoints/
+__pycache__/
+
+# spotify api integrations for later use
+pi_spot.py
+boy.py
