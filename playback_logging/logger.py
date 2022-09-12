@@ -9,7 +9,7 @@
 #################
 
 import os, time, json, spotipy
-from json_helper import write_json
+from playback_logging.json_helper import write_json
 from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 

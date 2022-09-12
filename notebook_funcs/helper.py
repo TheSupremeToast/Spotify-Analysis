@@ -1,13 +1,12 @@
-import pandas as pd
-import numpy as np
-from matplotlib import pyplot as plt
-from cleaner import *
-
 #################
 ### helper.py ###
 #################
 
 #################
+
+import pandas as pd
+from matplotlib import pyplot as plt
+from notebook_funcs.cleaner import *
 
 #
 # Instantiate global variables
@@ -30,7 +29,9 @@ def plotArtist(artistname, numtracks):
     plt.xticks(rotation = 90)
     plt.title('Most played songs by ' + artistname)
     plt.ylabel('Plays')
-    plt.show()
+    # plt.show()
+    # TODO: Figure out png vs svg with react
+    plt.savefig("plots/plotArtist.svg") # save figure for later use
 
 #################
 
@@ -202,7 +203,8 @@ def avgTrackLength():
 
 ################
 
-# IDEAS:
+# TODO: Potential improvements
+# image exports for all graph functions -> txt file export for others?
 # daily song/artist charts and numbers
 # desktop app allowing changing of graphs and lists
 # graph of playtime per month (general, artists, songs?)
@@ -211,6 +213,3 @@ def avgTrackLength():
 # make cleaner and helper into classes to store multiple sets of data at a time
 # all time data (multiple datasets) vs current year (jan-dec) data
 
-################
-
-# ENDFILE

@@ -1,15 +1,16 @@
-import os
-import numpy as np
-import pandas as pd
-import time
-import datetime
-import helper
-
 ##################
 ### cleaner.py ###
 ##################
 
 # clean up spotify input data and sort into pandas dataframes
+
+# TODO: optimize, importing this file takes 1.2 seconds
+
+##################
+
+import os, json, time, datetime
+import pandas as pd
+import notebook_funcs.helper as helper
 
 ##################
 
@@ -42,7 +43,12 @@ def sort_unskipped(his):
     unskipped = his[his['msPlayed'] > 30000]
 
     # This line causes minor error, fix at some point - currently necessary for timeframe functions to work
-    unskipped['endTime'] = pd.to_datetime(unskipped['endTime'])
+    # HACK: works as intended but throws errors
+    # FIX: replace with loc
+    unskipped['endTime'] = pd.to_datetime(unskipped['endTime']) # WARNING:
+
+    # print(unskipped.loc[unskipped['endTime'] >= "0", ['endTime']])
+    # unskipped['endtime'] = pd.to_datetime(unskipped.loc[unskipped['endTime'] >= "0", ['endTime']])
     
     helper.unskipped = unskipped
     return(unskipped)
@@ -76,10 +82,5 @@ def get_artists(his):
 
 # for relative frequency add 'normalize = True' within value_counts()
 
-# outdated - use get functions with skipped df
-# skipped_tracks = skipped['trackName'].value_counts()
-# skipped_artists = skipped['artistName'].value_counts()
-
 ##################
 
-# ENDFILE

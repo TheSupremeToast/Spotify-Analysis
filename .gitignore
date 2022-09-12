@@ -1,7 +1,15 @@
-input/..
-.ipynb_checkpoints/
-__pycache__/
+# Unwanted directories
+input
+output
+tests
+.ipynb_checkpoints
+__pycache__
+plots
 
-# spotify api integrations for later use
-pi_spot.py
-boy.py
+# Unwanted files
+.cache
+*test*
+
+# Secrets
+.env
+

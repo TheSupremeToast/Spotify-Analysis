@@ -4,3 +4,10 @@ This is a notebook I made as a personal project to make sense of the data obtain
 To get your own personal data go to spotify.com -> account -> privacy -> request data  
 
 If you want to use my script, unzip your data folder into the input folder and follow the instructions in teh notebook  
+
+Instructions for live logging capabilities and using the React app will be added soon  
+
+## Dependencies  
+- pandas
+- orjson
+- spotipy (required for live logger)
