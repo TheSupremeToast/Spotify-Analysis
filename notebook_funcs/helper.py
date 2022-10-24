@@ -21,7 +21,7 @@ skipped = None
 #
 # plots top (numtracks) songs by a given artist
 #
-def plotArtist(artistname, numtracks):
+def plotArtist(artistname, numtracks, export = False):
     plt.rcParams['figure.figsize'] = [20, 8]
     artistdata = unskipped[unskipped['artistName'] == artistname]
     artistdata = artistdata['trackName'].value_counts()
@@ -29,9 +29,48 @@ def plotArtist(artistname, numtracks):
     plt.xticks(rotation = 90)
     plt.title('Most played songs by ' + artistname)
     plt.ylabel('Plays')
-    # plt.show()
-    # TODO: Figure out png vs svg with react
-    plt.savefig("plots/plotArtist.svg") # save figure for later use
+    if export:
+        # TODO: Figure out png vs svg with react
+        plt.savefig("plots/plotArtist.png") # save figure for later use
+        plt.show()
+    else:
+        plt.show()
+
+#################
+
+#
+# plot top tracks
+#
+def plotTopTracks(tracks, numtracks, export = False):
+    fig = plt.figure()
+    plt.rcParams['figure.figsize'] = [10, 8]
+    plt.plot(tracks.head(numtracks), 'o')
+    plt.xticks(rotation = 90)
+    plt.title('Most Played Tracks')
+    plt.ylabel('Plays')
+    if export:
+        plt.savefig("plots/plotTopTracks.png")
+        plt.close(fig)
+    else:
+        plt.show()
+    return
+
+#
+# plot top artists
+#
+def plotTopArtists(artists, numartists, export = False):
+    fig = plt.figure()
+    plt.rcParams['figure.figsize'] = [10, 8]
+    plt.plot(artists.head(numartists), 'o')
+    plt.xticks(rotation = 90)
+    plt.title('Most Played Artists')
+    plt.ylabel('Plays')
+    if export:
+        plt.savefig("plots/plotTopArtists.png")
+        plt.close(fig)
+    else:
+        plt.show()
+    return
 
 #################
 
@@ -69,7 +108,7 @@ def playtime(his):
 def artistPlayCount(artistname):
     plays = unskipped[unskipped['artistName'] == artistname]
     plays = plays.apply(lambda x: x.nunique())
-    print("You have listened to", artistname, plays, "times.")
+    print("You have listened to", artistname, '\n', plays, "times.")
     return plays[0]
     
 #
@@ -78,7 +117,7 @@ def artistPlayCount(artistname):
 def songPlayCount(trackname):
     plays = unskipped[unskipped['trackName'] == trackname]
     plays = plays.apply(lambda x: x.nunique())
-    print("You have listened to", trackname, plays, "times.")
+    print("You have listened to", trackname, '\n', plays, "times.")
     return plays[0]
 
 #################
@@ -103,7 +142,7 @@ def topSongsTimeframe(timestamp, graph = False):
 #
 # Get top songs between two dates
 #
-def topSongsTimeframeBounded(lower, upper, graph = False):
+def topSongsTimeframeBounded(lower, upper, numsongs, graph = False, export = False):
     plt.rcParams['figure.figsize'] = [20, 8]
     element_l = datetime.datetime.strptime(lower, "%Y-%m-%d")
     element_u = datetime.datetime.strptime(upper, "%Y-%m-%d")
@@ -115,8 +154,11 @@ def topSongsTimeframeBounded(lower, upper, graph = False):
         plt.xticks(rotation = 90)
         plt.title('Top tracks between ' + lower + ' and ' + upper)
         plt.ylabel('Plays')
-        plt.show()
-    return (temp.head(25))
+        if export:
+            plt.savefig('plots/topSongsTimeframeBounded.png')
+        else:
+            plt.show()
+    return (temp.head(numsongs))
 
 #
 # Get top artists since a data
@@ -132,12 +174,12 @@ def topArtistsTimeframe(timestamp, graph = False):
         plt.title('Top Artists Since ' + timestamp)
         plt.ylabel('Plays')
         plt.show()
-    return(temp.head(10))
+    return(temp.head())
 
 #
 # Get top artists between two dates
 #
-def topArtistsTimeframeBounded(lower, upper, graph = False):
+def topArtistsTimeframeBounded(lower, upper, numartists, graph = False, export = False):
     plt.rcParams['figure.figsize'] = [20, 8]
     element_l = datetime.datetime.strptime(lower, "%Y-%m-%d")
     element_u = datetime.datetime.strptime(upper, "%Y-%m-%d")
@@ -149,8 +191,11 @@ def topArtistsTimeframeBounded(lower, upper, graph = False):
         plt.xticks(rotation = 90)
         plt.title('Top Artists Between ' + lower + ' and ' + upper)
         plt.ylabel('Plays')
-        plt.show()
-    return(temp.head(10))
+        if export:
+            plt.savefig('plots/topArtistsTimeframeBounded.png')
+        else:
+            plt.show()
+    return(temp.head(numartists))
 
 #################
 
@@ -200,6 +245,52 @@ def avgTrackLength():
     plt.ylabel("Number of plays")
     plt.title("Average Song Length")
     plt.show()
+
+################
+
+#
+# Get most skipped songs between two dates
+#
+def mostSkippedArtistsTimeframeBounded(lower, upper, numartists, export = False, graph = False):
+    plt.rcParams['figure.figsize'] = [10, 8]
+    element_l = datetime.datetime.strptime(lower, "%Y-%m-%d")
+    element_u = datetime.datetime.strptime(upper, "%Y-%m-%d")
+    times = skipped[skipped['endTime'] >= element_l] 
+    times = times[times['endTime'] <= element_u]
+    temp = times['artistName'].value_counts() 
+    if graph:
+        plt.plot(temp.head(numsongs), 'o')
+        plt.xticks(rotation = 90)
+        plt.title('Top tracks between ' + lower + ' and ' + upper)
+        plt.ylabel('Plays')
+        if export:
+            plt.savefig("plots/mostSkippedTimeframeBounded.png")
+        else:
+            plt.show()
+    return (temp.head(numsongs))
+
+#
+# Get most skipped songs between two dates
+#
+def mostSkippedTimeframeBounded(lower, upper, numsongs, graph = False, export = False):
+    fig = plt.figure()
+    plt.rcParams['figure.figsize'] = [10, 8]
+    element_l = datetime.datetime.strptime(lower, "%Y-%m-%d")
+    element_u = datetime.datetime.strptime(upper, "%Y-%m-%d")
+    times = skipped[skipped['endTime'] >= element_l] 
+    times = times[times['endTime'] <= element_u]
+    temp = times['trackName'].value_counts() 
+    if graph:
+        plt.plot(temp.head(numsongs), 'o')
+        plt.xticks(rotation = 90)
+        plt.title('Top tracks between ' + lower + ' and ' + upper)
+        plt.ylabel('Plays')
+        if export:
+            plt.savefig("plots/mostSkippedTimeframeBounded.png")
+            plt.close(fig)
+        else:
+            plt.show()
+    return (temp.head(numsongs))
 
 ################
 
