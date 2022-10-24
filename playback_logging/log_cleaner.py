@@ -48,11 +48,16 @@ def clean_logs(path, make_new = False):
 
         # timestamp = data['history'][count]['timestamp']
         timestamp = entry['timestamp']
-        if prev_timestamp != timestamp:
+        if prev_timestamp != timestamp: 
             # define json dictionary output format
             count -= 1
             progress = data['history'][count]['progress_ms']
             duration = data['history'][count]['item']['duration_ms']
+
+            # FIX: use this to figure out replicate plays
+            if prev_timestamp + duration + 8000 < timestamp:
+                count += 1
+                continue
 
             # spotify metric for skips
             if 30000 <= progress <= duration:
