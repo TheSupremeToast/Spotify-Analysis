@@ -7,9 +7,12 @@ __pycache__
 plots
 
 # Unwanted files
-.cache
+**/.RData
+**/.Rhistory
+**/.cache
+**/todo.txt
 *test*
 
 # Secrets
-.env
+**/.env
 
